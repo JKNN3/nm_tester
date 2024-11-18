@@ -38,9 +38,7 @@ if [ -f not_passed ] ; then
     echo -e "\n$red    NOT PASSED:\n$endcolor"
     cat not_passed ; echo ""
 else
-    echo -e "\n$pink        E.T. LOOKS FINE$endcolor\n\n
-    (not talking about the fact that you abandoned -a u cunt)\n
-    (2 years and you still don't know how to increment a ptr, what a shame)\n"
+    echo -e "\n$pink        EVERYTHING LOOKS FINE$endcolor\n
 fi
 
 if  [ -f not_passed ] ; then
