@@ -38,7 +38,7 @@ if [ -f not_passed ] ; then
     echo -e "\n$red    NOT PASSED:\n$endcolor"
     cat not_passed ; echo ""
 else
-    echo -e "\n$pink        EVERYTHING LOOKS FINE$endcolor\n
+    echo -e "\n$pink        EVERYTHING LOOKS FINE$endcolor\n"
 fi
 
 if  [ -f not_passed ] ; then
