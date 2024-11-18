@@ -1,0 +1,9 @@
+
+-f
+-agufrp
+--debug-syms --extern-only --undefined_only --no-sort --reverse-sort
+--debug_syms
+"" ; cp ressources/a.out .
+""
+
+

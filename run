@@ -1,0 +1,33 @@
+#!/bin/bash
+
+italic=""\e[3mitalic\e[0m""
+green="\e[32m"
+red="\e[31m"
+pink="\e[38;2;255;182;193m"
+blue="\e[38;2;102;178;255m"
+purple="\e[38;2;150;150;255m"
+end="\e[0m"
+usage="\n    ./run or ./run [options] $purple bonus,$blue memory, $pink errors$end, all\n"
+
+chmod +x ./srcs/test_mandatory.sh ./srcs/test_bonus.sh ./srcs/trigger_errors.sh ./srcs/test_memory.sh
+
+if ! cp  ../ft_nm . ; then
+    echo -e "binary not found"
+elif [ "$*" = "" ]; then
+    ./srcs/test_mandatory.sh
+    echo -e "$usage"
+elif [ "$*" = "memory" ]; then
+    ./srcs/test_memory.sh
+elif [ "$*" = "bonus" ]; then 
+    ./srcs/test_bonus.sh
+elif [ "$*" = "errors" ]; then
+    ./srcs/trigger_errors.sh
+elif [ "$*" = "all" ]; then
+    ./srcs/test_mandatory.sh; ./srcs/test_bonus.sh; ./srcs/test_memory.sh
+else
+    echo -e "$usage"
+fi
+
+if [ -f ft_nm ]; then
+    rm ft_nm
+fi

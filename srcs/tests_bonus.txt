@@ -1,0 +1,10 @@
+--extern-only --debug-syms --undefined-only --no-sort --reverse-sort
+-g -u -r -p -a
+-agurp
+-a
+-g 
+-u 
+-r 
+-p 
+-rp
+

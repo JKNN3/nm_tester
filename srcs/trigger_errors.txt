@@ -1,0 +1,4 @@
+agagougou
+ressources/
+-x
+--ratatouille
