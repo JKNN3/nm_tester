@@ -12,18 +12,18 @@ echo -e "\n         $purple TESTS MEMORY: $endcolor\n"
 
         # mandatory fd closed test
 valgrind --track-fds=yes --log-file=$logfile ./ft_nm ft_nm > tmp
-if cat $logfile | grep 'Open file descriptor 3' > tmp ; then
-    echo -e "   $green [PASSED]   $endcolor: mandatory : no open fd"
+if cat $logfile | grep '3 open' > tmp ; then
+    echo -e "   $green [PASSED]   $endcolor: mandatory"
 else
-    echo -e " $red [NOT PASSED] $endcolor: mandatory :  open fd"
+    echo -e " $red [NOT PASSED] $endcolor: valgrind --track-fds=yes ./ft_nm ft_nm"
     cat tmp
 fi
         # mandatory fd closed 2 files test
 valgrind --track-fds=yes --log-file=$logfile ./ft_nm ft_nm ft_nm > tmp
-if cat $logfile | grep 'Open file descriptor 3' > tmp ; then
-    echo -e "   $green [PASSED]   $endcolor: mandatory 2 files: no open fd"
+if cat $logfile | grep '3 open' > tmp; then
+    echo -e "   $green [PASSED]   $endcolor: mandatory 2 files"
 else
-    echo -e " $red [NOT PASSED] $endcolor: mandatory 2 files : open fd"
+    echo -e " $red [NOT PASSED] $endcolor: valgrind --track-fds=yes ./ft_nm ft_nm ft_nm"
     cat tmp
 fi
         # mandatory leak test
@@ -40,49 +40,51 @@ if cat $logfile | grep 'no leaks are possible' > tmp ; then
 else
     echo -e " $red [NOT PASSED] $endcolor: mandatory wrong file leak test :  valgrind ./ft_nm nm"
 fi
+        # mandatory two files leak test
+valgrind 2>tmp --log-file=$logfile ./ft_nm ft_nm ft_nm > tmp
+if cat $logfile | grep 'no leaks are possible' > tmp ; then
+    echo -e "   $green [PASSED]   $endcolor: mandatory two files leak test : no leak"
+else
+    echo -e " $red [NOT PASSED] $endcolor: valgrind ./ft_nm -u ft_nm ft_nm"
+fi
         # bonus fd closed test
 valgrind 2>tmp --track-fds=yes --log-file=$logfile ./ft_nm -u ft_nm > tmp
-if cat $logfile | grep 'Open file descriptor 3' > tmp; then
+if cat $logfile | grep '3 open' > tmp; then
     echo -e "   $green [PASSED]   $endcolor: bonus no open fd"
 else
-    echo -e " $red [NOT PASSED] $endcolor: bonus fd not closed : open fd"
+    echo -e " $red [NOT PASSED] $endcolor: valgrind --track-fds=yes ./ft_nm -u ft_nm"
     cat tmp
 fi
         # bonus fd closed 2 files test
 valgrind 2>tmp --track-fds=yes --log-file=$logfile ./ft_nm -u ft_nm ft_nm > tmp
-if cat $logfile | grep 'Open file descriptor 3' > tmp ; then
+if cat $logfile | grep '3 open' > tmp ; then
     echo -e "   $green [PASSED]   $endcolor: bonus 2 files no open fd"
 else
-    echo -e " $red [NOT PASSED] $endcolor: bonus with 2 files fd not closed : open fd"
+    echo -e " $red [NOT PASSED] $endcolor: valgrind --track-fds=yes ./ft_nm -u ft_nm ft_nm"
     cat tmp
 fi
         # bonus leak test
-valgrind 2>tmp --log-file=$logfile ../ft_nm -u ft_nm > tmp
+valgrind 2>tmp --log-file=$logfile ./ft_nm -u ft_nm > tmp
 if cat $logfile | grep 'no leaks are possible' > tmp ; then
     echo -e "   $green [PASSED]   $endcolor: bonus leak test : no leak"
 else
-    echo -e " $red [NOT PASSED] $endcolor: bonus leak test : check w valgrind"
+    echo -e " $red [NOT PASSED] $endcolor: valgrind ./ft_nm -u ft_nm"
 fi
         # bonus wrong file leak test
 valgrind 2>tmp --log-file=$logfile ./ft_nm -u nm > tmp
 if cat $logfile | grep 'no leaks are possible' > tmp ; then
     echo -e "   $green [PASSED]   $endcolor: bonus wrong file leak test : no leak"
 else
-    echo -e " $red [NOT PASSED] $endcolor: bonus wrong file leak test : check w valgrind"
-fi        # bonus leak test
-valgrind 2>tmp --log-file=$logfile ../ft_nm -u ft_nm > tmp
-if cat $logfile | grep 'no leaks are possible' > tmp ; then
-    echo -e "   $green [PASSED]   $endcolor: bonus leak test : no leak"
-else
-    echo -e " $red [NOT PASSED] $endcolor: bonus leak test : check w valgrind"
+    echo -e " $red [NOT PASSED] $endcolor: valgrind ./ft_nm -u nm"
 fi
-        # bonus wrong file leak test
-valgrind 2>tmp --log-file=$logfile ./ft_nm -u nm > tmp
+        # bonus two files leak test
+valgrind 2>tmp --log-file=$logfile ./ft_nm -u ft_nm ft_nm > tmp
 if cat $logfile | grep 'no leaks are possible' > tmp ; then
-    echo -e "   $green [PASSED]   $endcolor: bonus wrong file leak test : no leak"
+    echo -e "   $green [PASSED]   $endcolor: bonus two files leak test : no leak"
 else
-    echo -e " $red [NOT PASSED] $endcolor: bonus wrong file leak test : check w valgrind"
+    echo -e " $red [NOT PASSED] $endcolor: valgrind ./ft_nm -u ft_nm ft_nm"
 fi
+
 
     echo -e ""
 
@@ -93,4 +95,5 @@ fi
 if [ -f logfile ] ; then
     rm logfile
 fi
+
 
